@@ -14,8 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.use( require('./routes/usuario'));// exportar metodos del archivo usuario
-app.use( require('./routes/contenido'));// exportar metodos del archivo Contenido
+app.use( require('./routes/index'));// exportar todas las rutas del archivo index.js
+
 
 app.get('/', function (req, res) {
   res.send('Hello World')
@@ -32,3 +32,9 @@ mongoose.connect(process.env.URLDB, (err, res) =>{
 app.listen(process.env.PORT, ()=>{
   console.log('running on port 4000');
 })
+
+/*function parseJWT (token) {
+  var base64Url = token.split('.')[1];
+  var base64 = base64Url.replace('-','+').replace('_', '/');
+  return JSON.parse(window.atob(base64));
+};*/

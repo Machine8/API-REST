@@ -5,6 +5,7 @@ const Contenido = require('../models/contenido')
 const uniqueValidator = require('mongoose-unique-validator')
 
 
+
 let rolesValidos = {
   values: ['ADMIN', 'USER'],
   message: '{values} no es un rol valido'
@@ -55,7 +56,7 @@ let usuarioSchema = new Schema({
      default: false
    },
 
-    contenido: [{ type: Schema.Types.ObjectId, ref: 'Contenido' }]
+    /*contenido: [{ type: Schema.Types.ObjectId, ref: 'Contenido' }]*/
 
 });
 

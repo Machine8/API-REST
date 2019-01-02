@@ -4,12 +4,13 @@ const app = express()
 const fs = require('fs');
 const _ = require('underscore');
 
+const bcrypt = require('bcryptjs');
+
 const Usuario = require('../models/usuario')
 const Contenido = require('../models/contenido')
+const { verificaToken }= require('../middlewares/autentificacion')
 
-app.get('/', function (req, res) {
-  res.send('Hello World')
-});
+
 
 app.post('/usuario/:id', function (req, res) {
   let id = req.params.id
@@ -70,14 +71,23 @@ app.get('/usuario', function (req, res) {
 
 
 //filtrar datos
-app.get('/usuarios', function (req, res) {
+app.get('/usuarios', verificaToken , (req, res) =>{
+
+      // esto hace referencia a las propiedades que hay en el metodo verificar
+      /*return res.json({
+         usuario: req.usuario,
+         nombre: req.usuario.nombre,
+         email:req.usuario.email
+      });*/
+
+
    let start = req.query.start || 0;
    start = Number(start);
 
    let finish = req.query.finish || 0;
     finish = Number(finish);
 
-  Usuario.find({estado:true}, 'nombre email google estado ')
+  Usuario.find({}, 'nombre email google estado ')
   .skip(start)
   .limit(finish)
   .exec( (err, usuarioDB) => {
@@ -88,7 +98,7 @@ app.get('/usuarios', function (req, res) {
       });
     }
 
-    Usuario.count({estado:true}, (err,conteo) =>{
+    Usuario.count({}, (err,conteo) =>{
 
       res.json({
       usuario:usuarioDB,
@@ -136,7 +146,7 @@ app.post('/usuario', (req, res)  => {
   let usuario = new Usuario({
     nombre: body.nombre,
     email: body.email,
-    password: body.password,
+    password: bcrypt.hashSync(body.password, 10),
     nickname: body.nickname,
     role: body.role
   });
@@ -163,7 +173,7 @@ app.post('/usuario', (req, res)  => {
 
 
 // actualizar
-app.put('/usuario/:id', function (req, res) {
+app.put('/usuario/:id', verificaToken , (req, res) =>{
   res.contentType("application/json");
   let id = req.params.id;
   //let body = req.body;
@@ -198,7 +208,7 @@ Usuario.findByIdAndUpdate( id, body, {new:true, runValidators:true}, (err, usuar
 
 
 //create context
-
+/*
 app.post('/created', (req, res)  => {
   let body = req.body;
 
@@ -206,7 +216,7 @@ app.post('/created', (req, res)  => {
     _id: new mongoose.Types.ObjectId(),
     nombre: body.nombre,
     email: body.email,
-    password: body.password,
+    password: bcrypt.hashSync(body.password, 1),
     nickname: body.nickname,
     role: body.role
 
@@ -251,7 +261,7 @@ app.post('/created', (req, res)  => {
 
   });
 
-});
+});*/
 
 
 //buscar por propiedad
@@ -290,7 +300,7 @@ let id = req.params.id;
 
 
 //delete Usuario
-app.delete('/usuario/:id', function (req, res) {
+app.delete('/usuario/:id', verificaToken, (req, res) =>{
 
   let id = req.params.id;
 

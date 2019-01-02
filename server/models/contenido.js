@@ -7,9 +7,9 @@ const uniqueValidator = require('mongoose-unique-validator')
 let Schema = mongoose.Schema;
 
 let contenidoSchema = new Schema({
-  author:{
+  /*author:{
     type:Schema.Types.ObjectId, ref: 'Usuario'
-  },
+  },*/
   nombreUser:{
     type:String,
   },

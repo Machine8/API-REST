@@ -13,6 +13,16 @@ process.env.PORT = process.env.PORT || 4000;
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
 //========================
+//caducidad
+//==================================
+process.env.CADUCIDAD_TOKEN = 60 * 60 * 24 * 30;
+
+//========================
+//caducidad
+//==================================
+process.env.SEED = process.env.SEED || 'este-es-el-sed-dessarollo' ;
+
+//========================
 //Bases de datos conection
 //==================================
 
@@ -21,7 +31,7 @@ let urlDB;
 if(process.env.NODE_ENV === 'dev'){
   urlDB ='mongodb://localhost:27017/cafe';
 }else{
-  urlDB ='mongodb://cafe-db:cafedb12345@ds143143.mlab.com:43143/cafe-db';
+  urlDB =process.env.MONGO_URL;
 }
 
 process.env.URLDB = urlDB;
