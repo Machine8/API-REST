@@ -1,0 +1,52 @@
+
+
+
+
+<header>
+  <h1>Categoria</h1>
+</header>
+
+<!--{{# each categoria }}
+<div class="card">
+  <div class="card-header">
+    {{ this.descripcion }}
+  </div>
+
+  <div class="card-body">
+    {{ this.usuario.nombre }}
+  </div>
+</div>
+
+{{/each}}
+-->
+<select class="custom-select">
+  <option selected>Open this select menu</option>
+
+  {{# each categoria }}
+  <option value="1">    {{ this.descripcion }} </option>
+  {{/each}}
+
+</select>
+
+<form class="form-group" action="/producto/busqueda" method="GET">
+  <div class="form-group">
+    <input type="text" name="busca" class="form-control" placeholder="buscar... ">
+  </div>
+  <input type="submit"  value="search">
+</form>
+
+<div class="alert alert-warning" role="alert">
+
+  {{ alert }}
+</div>
+
+
+{{# each producto }}
+<div class="card">
+  <div class="card-header">
+    {{ this.nombre }}
+  </div>
+{{ this.descripcion }}
+</div>
+<br>
+{{/each}}

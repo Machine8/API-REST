@@ -4,6 +4,7 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const path = require('path')
 
 //milldware antes que se ejecute las peticiones los datos pasan por aquiii
 
@@ -13,6 +14,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
 app.use(bodyParser.json())
+
+//mostrar index.html
+app.use(express.static(path.resolve(__dirname, '../public')));
+
+
+
+app.set('view engine', 'hbs');
+
 
 app.use( require('./routes/index'));// exportar todas las rutas del archivo index.js
 

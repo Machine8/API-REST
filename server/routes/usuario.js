@@ -171,6 +171,45 @@ app.post('/usuario', (req, res)  => {
 
 });
 
+app.get('/registrar', (req, res)  => {
+
+
+  res.render('registrar');
+
+
+});
+
+app.post('/registrar', (req, res)  => {
+  let body = req.body;
+
+  let usuario = new Usuario({
+    nombre: body.nombre,
+    email: body.email,
+    password: bcrypt.hashSync(body.password, 10),
+    nickname: body.nickname,
+    role: body.role
+  });
+
+
+
+
+  usuario.save( (err, usuarioDB) =>{
+
+    if( err ){
+      return res.status(400).json({
+        ok:false ,
+        err
+      });
+    }
+    res.redirect('registrar');
+    console.log('user registre');
+    
+
+
+  });
+
+});
+
 
 // actualizar
 app.put('/usuario/:id', verificaToken , (req, res) =>{
