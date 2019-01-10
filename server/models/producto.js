@@ -6,7 +6,7 @@ const uniqueValidator = require('mongoose-unique-validator')
 const productoSchema = new Schema({
   nombre:{
     type:String,
-  
+
     required:[
       true,
       'The information necesarry'
@@ -31,6 +31,10 @@ const productoSchema = new Schema({
 
   },
 
+  img:{
+    type: String,
+    required: false,
+  },
   estado:{
     type:Boolean,
 
